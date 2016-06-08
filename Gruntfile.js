@@ -3,7 +3,6 @@ module.exports = function(grunt)
 {
 	
 	require('time-grunt')(grunt); //  for time estimation
-	
 	grunt.initConfig({
 
 		pkg: grunt.file.readJSON('package.json'),
@@ -23,39 +22,38 @@ module.exports = function(grunt)
 			},
 
 		uglify: {
-			production: { 
-				options: {
+			options: {
 				},
 				build: {
 					
 						files: [{
 						expand: true,
 						flatten: false,
-						cwd: 'wp-content/themes/krds/',
+						cwd: 'wp/wp-content/themes/krds/',
 						ext: '.js',
 						src: ['**/*.js', '!*.min.js'],
 						filter: 'isFile',
-						dest: 'wp-content/themes/krds/'
+						dest: 'wp/wp-content/themes/krds/'
 					}]
 				}
-			}
+			
 		},
 			
 		cssmin: {
-			production: { 
-				target: {
+			 
+				build: {
 				  files: [{
 					expand: true,
 					flatten: false,
-					cwd: 'wp-content/themes/krds/',
+					cwd: 'wp/wp-content/themes/krds/',
 					ext: '.css',
 					src: ['*.css', '!*.min.css'],
 					filter: 'isFile',
-					dest: 'wp-content/themes/krds/'
+					dest: 'wp/wp-content/themes/krds/'
 					
 				  }]
 				}
-			}
+			
 		},
 
 		prompt: {
@@ -83,11 +81,11 @@ module.exports = function(grunt)
 				  files: [{
 					expand: true,
 					flatten: false,
-					cwd: 'wp-content/themes/krds/',
+					cwd: 'wp/wp-content/themes/krds/',
 					ext: '.css',
 					src: ['**/*.css'],
 					filter: 'isFile',
-					dest: 'wp-content/themes/krds/'
+					dest: 'wp/wp-content/themes/krds/'
 				  }],
 				  options: {
 					replacements: [{
@@ -148,7 +146,7 @@ module.exports = function(grunt)
 	grunt.loadNpmTasks('grunt-prompt');
 
 	grunt.registerTask('dev', ['composer:build:install', 'clean:before', 'copy', 'clean:after', 'prompt:target', 'string-replace:dev']);    
-	grunt.registerTask('production', ['uglify:production', 'cssmin:production', 'string-replace:prod']);
+	grunt.registerTask('production', ['uglify:build', 'cssmin:build', 'string-replace:prod']);
 
 };
 
