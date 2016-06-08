@@ -2,6 +2,7 @@
 module.exports = function(grunt) 
 {
 	
+	require('time-grunt')(grunt); //  for estimation
 	grunt.initConfig({
 
 		pkg: grunt.file.readJSON('package.json'),
@@ -56,8 +57,28 @@ module.exports = function(grunt)
 			}
 		},
 
+		prompt: {
+	        target: {
+	            options: {
+	                questions: [
+	                    {
+	                        config: 'projecturl',
+	                        type: 'input',
+	                        message: 'Enter Project url (ex: http://localhost/wordpress/wp/)',
+	                        validate: function(value){
+	                            if(value == '') {
+	                                return 'Should not be blank';
+	                            }
+	                            return true;
+	                        }
+	                    }                       
+	                ]
+	            }
+	        }
+    	},
+
 		'string-replace': {
-				dist: {
+				prod: {
 				  files: [{
 					expand: true,
 					flatten: false,
@@ -74,7 +95,21 @@ module.exports = function(grunt)
 
 					}]
 				  }
-				}
+				},
+
+				dev: {
+					files: [{
+						src: 'wp/wp-config.php',
+						dest: 'wp/wp-config.php'
+					  }],
+					  options: {
+						replacements: [{
+							pattern: /project url/ig,
+							replacement: '<%= projecturl %>'
+
+						}]
+					  }
+					}
 		},
 
 		copy: {
@@ -109,9 +144,10 @@ module.exports = function(grunt)
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-string-replace');
+	grunt.loadNpmTasks('grunt-prompt');
 
-	grunt.registerTask('dev', ['composer:build:install', 'clean:before', 'copy', 'clean:after']);    
-	grunt.registerTask('production', ['uglify:production', 'cssmin:production', 'string-replace']);
+	grunt.registerTask('dev', ['composer:build:install', 'clean:before', 'copy', 'clean:after', 'prompt:target', 'string-replace:dev']);    
+	grunt.registerTask('production', ['uglify:production', 'cssmin:production', 'string-replace:prod']);
 
 };
 
