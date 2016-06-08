@@ -2,7 +2,8 @@
 module.exports = function(grunt) 
 {
 	
-	require('time-grunt')(grunt); //  for estimation
+	require('time-grunt')(grunt); //  for time estimation
+	
 	grunt.initConfig({
 
 		pkg: grunt.file.readJSON('package.json'),
