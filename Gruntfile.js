@@ -62,12 +62,56 @@ module.exports = function(grunt)
 	                        type: 'input',
 	                        message: 'Enter Project url (ex: http://localhost/wordpress/wp/)',
 	                        validate: function(value){
-	                            if(value == '') {
-	                                return 'Should not be blank';
+	                            if(! /^(http|https):\/\/[^ "]+$/.test(value)) {
+	                                return 'Enter valid url';
 	                            }
 	                            return true;
 	                        }
-	                    }                       
+	                    },
+	                    {
+	                        config: 'dbname',
+	                        type: 'input',
+	                        message: 'Enter DB Name',
+	                        validate: function(value){
+	                            if(value == '') {
+	                                return 'Enter Db name';
+	                            }
+	                            return true;
+	                        }
+	                    },
+	                    {
+	                        config: 'dbuser',
+	                        type: 'input',
+	                        message: 'Enter DB User',
+	                        validate: function(value){
+	                            if(value == '') {
+	                                return 'Enter Db User';
+	                            }
+	                            return true;
+	                        }
+	                    },
+	                    {
+	                        config: 'dbpassword',
+	                        type: 'password',
+	                        message: 'Enter DB Password',
+	                        validate: function(value){
+	                            if(value == '') {
+	                                return 'Enter Db Password';
+	                            }
+	                            return true;
+	                        }
+	                    },
+	                    {
+	                        config: 'dbhost',
+	                        type: 'input',
+	                        message: 'Enter DB Host',
+	                        validate: function(value){
+	                            if(value == '') {
+	                                return 'Enter Db Host';
+	                            }
+	                            return true;
+	                        }
+	                    }                                     
 	                ]
 	            }
 	        }
@@ -103,7 +147,29 @@ module.exports = function(grunt)
 							pattern: /project url/ig,
 							replacement: '<%= projecturl %>'
 
-						}]
+						},
+						{
+							pattern: /dbname/i,
+							replacement: '<%= dbname %>'
+
+						},
+						{
+							pattern: /dbuser/i,
+							replacement: '<%= dbuser %>'
+
+						},
+						{
+							pattern: /dbpass/i,
+							replacement: '<%= dbpassword %>'
+
+						},
+
+						{
+							pattern: /dbhost/i,
+							replacement: '<%= dbhost %>'
+
+						},
+					]
 					  }
 					}
 			},
@@ -130,7 +196,13 @@ module.exports = function(grunt)
 	      clean: {
 	      	before: ["wp/wp-content/themes/*/","wp/wp-content/plugins/hello.php","wp/wp-config-sample.php"],
 	      	after: ["vendor/custom-wptheme", "vendor/wp-autoconfig"]
+	    },
+
+	    open : {
+	    dev : {
+	      path: '<%= projecturl %>'
 	    }
+
 });
 	 
 	grunt.loadNpmTasks('grunt-composer');
@@ -141,9 +213,30 @@ module.exports = function(grunt)
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-string-replace');
 	grunt.loadNpmTasks('grunt-prompt');
+	grunt.loadNpmTasks('grunt-open');
 
-	grunt.registerTask('dev', ['composer:build:install', 'clean:before', 'copy', 'clean:after', 'prompt:target', 'string-replace:dev']);    
-	grunt.registerTask('production', ['uglify:build', 'cssmin:build', 'string-replace:prod']);
+
+	//Dev Tasks
+
+	grunt.registerTask('dev', 
+		[
+		'composer:build:install', 
+		'clean:before', 
+		'copy', 
+		'clean:after', 
+		'prompt:target', 
+		'string-replace:dev',
+		'open:dev'
+	]); 
+
+	//Production Tasks
+
+	grunt.registerTask('production', 
+		[
+		'uglify:build', 
+		'cssmin:build', 
+		'string-replace:prod'
+	]);
 
 };
 
