@@ -3,6 +3,7 @@ module.exports = function(grunt)
 {
 	
 	require('time-grunt')(grunt); //  for time estimation
+
 	grunt.initConfig({
 
 		pkg: grunt.file.readJSON('package.json'),
@@ -25,8 +26,7 @@ module.exports = function(grunt)
 			options: {
 				},
 				build: {
-					
-						files: [{
+					files: [{
 						expand: true,
 						flatten: false,
 						cwd: 'wp/wp-content/themes/krds/',
@@ -36,12 +36,10 @@ module.exports = function(grunt)
 						dest: 'wp/wp-content/themes/krds/'
 					}]
 				}
-			
 		},
 			
 		cssmin: {
-			 
-				build: {
+			 build: {
 				  files: [{
 					expand: true,
 					flatten: false,
@@ -53,7 +51,6 @@ module.exports = function(grunt)
 					
 				  }]
 				}
-			
 		},
 
 		prompt: {
@@ -109,7 +106,7 @@ module.exports = function(grunt)
 						}]
 					  }
 					}
-		},
+			},
 
 		copy: {
 	        main: {

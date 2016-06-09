@@ -1,9 +1,9 @@
 {
   "name": "wpautomation",
   "version": "1.0.0",
-  "description": "wp auto",
+  "description": "wp automation for development",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "grunt dev"
   },
   "devDependencies": {
     "grunt": "~0.4.4",

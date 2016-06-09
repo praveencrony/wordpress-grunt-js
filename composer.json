@@ -1,6 +1,6 @@
 {
-	"name": "wp auto",
-	"description": "wordpess automation",
+	"name": "wp automation",
+	"description": "wordpess automation for development",
 	"keywords": ["wordpress","automation"],
 	"license": "GPL-2.0+",
 	"authors": [{
