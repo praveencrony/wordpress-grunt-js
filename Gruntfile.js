@@ -202,6 +202,7 @@ module.exports = function(grunt)
 	    dev : {
 	      path: '<%= projecturl %>'
 	    }
+	}
 
 });
 	 
