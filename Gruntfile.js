@@ -60,7 +60,7 @@ module.exports = function(grunt)
 	                    {
 	                        config: 'projecturl',
 	                        type: 'input',
-	                        message: 'Enter Project url (ex: http://localhost/wordpress/wp/)',
+	                        message: 'Enter Project Dev Url (ex: http://localhost/wordpress/wp/)',
 	                        validate: function(value){
 	                            if(! /^(http|https):\/\/[^ "]+$/.test(value)) {
 	                                return 'Enter valid url';
