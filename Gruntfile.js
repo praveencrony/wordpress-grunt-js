@@ -117,6 +117,15 @@ module.exports = function(grunt)
 	        }
     	},
 
+    	shell: {
+            install_db: {
+                options: {
+                    stdout: true
+                },
+                command: 'mysql -u <%= dbuser %> -p<%= dbpassword %> -e "CREATE DATABASE IF NOT EXISTS <%= dbname %>"'
+            }
+        },
+
 		'string-replace': {
 				prod: {
 				  files: [{
@@ -215,6 +224,7 @@ module.exports = function(grunt)
 	grunt.loadNpmTasks('grunt-string-replace');
 	grunt.loadNpmTasks('grunt-prompt');
 	grunt.loadNpmTasks('grunt-open');
+	grunt.loadNpmTasks('grunt-shell');
 
 
 	//Dev Tasks
@@ -226,6 +236,7 @@ module.exports = function(grunt)
 		'copy', 
 		'clean:after', 
 		'prompt:target', 
+		'shell:install_db',
 		'string-replace:dev',
 		'open:dev'
 	]); 
