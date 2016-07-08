@@ -184,7 +184,7 @@ module.exports = function(grunt)
 			},
 
 		copy: {
-	        main: {
+	        before: {
 	            files: [
 	                {
 	                    expand: true,
@@ -199,12 +199,23 @@ module.exports = function(grunt)
 	                    dest: 'wp/'
 	                }
 	           ]
+	        },
+
+	        after: {
+	            files: [
+	                {
+	                    expand: true,
+	                    cwd:'wp/',
+	                    src: '**',
+	                    dest: 'www/'
+	                },
+	           ]
 	        }
 	      },
 
 	      clean: {
 	      	before: ["wp/wp-content/themes/*/","wp/wp-content/plugins/hello.php","wp/wp-config-sample.php"],
-	      	after: ["vendor/custom-wptheme", "vendor/wp-autoconfig"]
+	      	after: ["vendor/", "composer.json", "composer.lock", "wp/"]
 	    },
 
 	    open : {
@@ -216,7 +227,6 @@ module.exports = function(grunt)
 });
 	 
 	grunt.loadNpmTasks('grunt-composer');
-	grunt.loadNpmTasks('grunt-wordpress-deploy');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -233,11 +243,12 @@ module.exports = function(grunt)
 		[
 		'composer:build:install', 
 		'clean:before', 
-		'copy', 
+		'copy:before', 
 		'clean:after', 
 		'prompt:target', 
 		'shell:install_db',
 		'string-replace:dev',
+		'copy:after', 
 		'open:dev'
 	]); 
 
